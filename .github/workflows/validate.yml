@@ -1,0 +1,22 @@
+name: Validate Windows registry and Scoop install
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        shell: [powershell, pwsh]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Package
+        run: python scripts/package.py
+      - name: Test registry and real Scoop installation
+        shell: ${{ matrix.shell }}
+        run: ./tests/windows.ps1
