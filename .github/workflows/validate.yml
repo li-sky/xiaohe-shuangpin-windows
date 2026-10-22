@@ -17,6 +17,11 @@ jobs:
       - uses: actions/checkout@v4
       - name: Package
         run: python scripts/package.py
-      - name: Test registry and real Scoop installation
-        shell: ${{ matrix.shell }}
+      - name: Test with Windows PowerShell 5.1
+        if: matrix.shell == 'powershell'
+        shell: powershell
+        run: ./tests/windows.ps1
+      - name: Test with PowerShell 7
+        if: matrix.shell == 'pwsh'
+        shell: pwsh
         run: ./tests/windows.ps1
