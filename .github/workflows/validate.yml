@@ -11,6 +11,7 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 10
     strategy:
+      fail-fast: false
       matrix:
         shell: [powershell, pwsh]
     steps:

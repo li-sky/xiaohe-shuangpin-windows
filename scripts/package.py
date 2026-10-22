@@ -17,6 +17,7 @@ with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_STORED) as package:
             if name.endswith('.ps1'):
                 data = data.replace(b'\n', b'\r\n')
         info = zipfile.ZipInfo(name, date_time=(2020, 1, 1, 0, 0, 0))
+        info.create_system = 3  # Keep ZIP metadata identical on Linux and Windows.
         info.external_attr = 0o644 << 16
         package.writestr(info, data)
 hash_value = hashlib.sha256(archive.read_bytes()).hexdigest()
